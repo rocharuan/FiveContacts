@@ -8,7 +8,6 @@ public class User implements Serializable {
     String nome;
     String login;
     String senha;
-    String email;
     boolean manterLogado=false;
     boolean tema_escuro=false;
     ArrayList<Contato> contatos;
@@ -24,11 +23,10 @@ public class User implements Serializable {
 
 
 
-    public User(String nome, String login, String password, String email, boolean manterLogado) {
+    public User(String nome, String login, String password, boolean manterLogado) {
         this.nome = nome;
         this.login=login;
         this.senha=password;
-        this.email=email;
         this.manterLogado=manterLogado;
         this.contatos = new ArrayList<Contato>();
     }
@@ -58,14 +56,6 @@ public class User implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public boolean isManterLogado() {

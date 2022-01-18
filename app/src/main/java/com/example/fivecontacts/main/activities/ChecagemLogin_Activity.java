@@ -35,25 +35,10 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
     EditText edPass;
     Button btLogar;
     Button btNovo;
-    TextView mTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checagem_login);
-
-      /*  User userPDM= new User();
-        userPDM.setNome("Einstein");
-      // userPDM.setTema_escuro(true);
-        Contato c= new Contato();
-        c.setNome("Newton");
-        c.setNumero("tel:+888888");
-        userPDM.getContatos().add(c);
-
-        Intent intentPDM= new Intent(this, ListaDeContatos_Activity.class);
-        intentPDM.putExtra("usuarioPDM",userPDM);
-        startActivity(intentPDM);
-
-*/
 
         //Existe um usuário padrão logado?
         if(montarObjetoUserSemLogar()){
@@ -74,10 +59,6 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
             btNovo = findViewById(R.id.btNovo);
             edUser = findViewById(R.id.edT_Login);
             edPass = findViewById(R.id.edt_Pass);
-
-            //Colocando Underline (Vamos usar esse campo mais na frente com o FireBase)
-            mTextView = findViewById(R.id.tvEsqueceuSenha);
-            mTextView.setPaintFlags(mTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
             //Evento de limpar Componente
             edUser.setOnTouchListener(new View.OnTouchListener() {
@@ -169,11 +150,10 @@ public class ChecagemLogin_Activity extends AppCompatActivity {
         String loginSalvo = temUser.getString("login","");
         String senhaSalva = temUser.getString("senha","");
         String nomeSalvo = temUser.getString("nome","");
-        String emailSalvo = temUser.getString("email","");
         boolean manterLogado=temUser.getBoolean("manterLogado",false);
         boolean temaEscuro=temUser.getBoolean("tema",false);
 
-        user=new User(nomeSalvo,loginSalvo,senhaSalva,emailSalvo,manterLogado);
+        user=new User(nomeSalvo,loginSalvo,senhaSalva,manterLogado);
         user.setTema_escuro(temaEscuro);
         return user;
     }

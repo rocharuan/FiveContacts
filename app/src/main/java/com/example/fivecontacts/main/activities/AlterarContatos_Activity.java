@@ -3,16 +3,21 @@ package com.example.fivecontacts.main.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,6 +33,7 @@ import com.example.fivecontacts.main.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -36,6 +42,7 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
     Boolean primeiraVezUser=true;
     EditText edtNome;
     ListView lv;
+    RecyclerView rv;
     BottomNavigationView bnv;
     User user;
 
@@ -109,7 +116,7 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
     }
 
 
-    public void onClickBuscar(View v){
+    public void onClickBuscar(View v) throws IOException {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED) {
             Log.v("PDM", "Pedir permissão");
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 3333);
@@ -124,6 +131,7 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
                 consulta,argumentosConsulta, null);
         final String[] nomesContatos = new String[cursor.getCount()];
         final String[] telefonesContatos = new String[cursor.getCount()];
+        final Bitmap[] fotosContatos = new Bitmap[cursor.getCount()];
         Log.v("PDM","Tamanho do cursor:"+cursor.getCount());
 
         int i=0;
@@ -141,6 +149,12 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
             while (phones.moveToNext()) {
                 String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 telefonesContatos[i]=number; //Salvando só último telefone
+
+//                Uri photo = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long
+//                        .valueOf(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
+//
+//                Uri imageUri = Uri.withAppendedPath(photo, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+//                fotosContatos[i] = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
             }
             i++;
         }
@@ -157,6 +171,7 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
                         Contato c= new Contato();
                         c.setNome(nomesContatos[i]);
                         c.setNumero("tel:+"+telefonesContatos[i]);
+                        c.setFoto(fotosContatos[i]);
                         salvarContato(c);
                         Intent intent = new Intent(getApplicationContext(), ListaDeContatos_Activity.class);
                         intent.putExtra("usuario", user);

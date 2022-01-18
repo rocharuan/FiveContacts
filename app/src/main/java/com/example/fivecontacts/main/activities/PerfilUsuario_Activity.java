@@ -25,7 +25,6 @@ public class PerfilUsuario_Activity extends AppCompatActivity implements BottomN
     EditText edUser;
     EditText edPass;
     EditText edNome;
-    EditText edEmail;
     Switch swLogado;
 
     Button btModificar;
@@ -45,7 +44,6 @@ public class PerfilUsuario_Activity extends AppCompatActivity implements BottomN
         edUser=findViewById(R.id.edT_Login2);
         edPass=findViewById(R.id.edt_Pass2);
         edNome=findViewById(R.id.edtNome);
-        edEmail=findViewById(R.id.edEmail);
         swLogado=findViewById(R.id.swLogado);
 
         Intent quemChamou = this.getIntent();
@@ -62,7 +60,6 @@ public class PerfilUsuario_Activity extends AppCompatActivity implements BottomN
                    edUser.setText(user.getLogin());
                     edPass.setText(user.getSenha());
                     edNome.setText(user.getNome());
-                    edEmail.setText(user.getEmail());
                     swLogado.setChecked(user.isManterLogado());
         }
 
@@ -72,7 +69,6 @@ public class PerfilUsuario_Activity extends AppCompatActivity implements BottomN
                 user.setNome(edNome.getText().toString());
                 user.setLogin(edUser.getText().toString());
                 user.setSenha(edPass.getText().toString());
-                user.setEmail(edEmail.getText().toString());
                 user.setManterLogado(swLogado.isChecked());
                 salvarModificacoes(user);
             }
@@ -109,7 +105,6 @@ public class PerfilUsuario_Activity extends AppCompatActivity implements BottomN
         escritor.putString("login",user.getLogin());
 
         //Escrever no SharedPreferences
-        escritor.putString("email",user.getEmail());
         escritor.putBoolean("manterLogado",user.isManterLogado());
 
 

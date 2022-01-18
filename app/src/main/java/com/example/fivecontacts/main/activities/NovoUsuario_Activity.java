@@ -21,15 +21,12 @@ public class NovoUsuario_Activity extends AppCompatActivity {
 
     boolean primeiraVezUser=true;
     boolean primeiraVezNome=true;
-    boolean primeiraVezEmail=true;
     boolean primeiraVezSenha=true;
     EditText edUser;
     EditText edPass;
     EditText edNome;
-    EditText edEmail;
     Switch swLogado;
 
-    Switch swTema;
     Button btCriar;
 
 
@@ -42,10 +39,7 @@ public class NovoUsuario_Activity extends AppCompatActivity {
         edUser=findViewById(R.id.edT_Login2);
         edPass=findViewById(R.id.edt_Pass2);
         edNome=findViewById(R.id.edtNome);
-        edEmail=findViewById(R.id.edEmail);
         swLogado=findViewById(R.id.swLogado);
-
-        swTema= findViewById(R.id.swTema);
 
         setTitle("Novo Usuário");
 
@@ -77,20 +71,6 @@ public class NovoUsuario_Activity extends AppCompatActivity {
             }
         });
 
-        //Evento de limpar Componente - E-mail
-
-        edEmail.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (primeiraVezEmail){
-                    primeiraVezEmail=false;
-                    edEmail.setText("");
-                }
-
-                return false;
-            }
-        });
-
         //Evento de limpar Componente - Nome
 
         edNome.setOnTouchListener(new View.OnTouchListener() {
@@ -118,12 +98,8 @@ public class NovoUsuario_Activity extends AppCompatActivity {
                 senha = edPass.getText().toString();
 
                 //Novos componentes
-                String email;
-                email = edEmail.getText().toString();
                 boolean manterLogado;
                 manterLogado= swLogado.isChecked();
-
-                boolean temaEscuro=swTema.isChecked();
 
                 SharedPreferences salvaUser= getSharedPreferences("usuarioPadrao", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor escritor= salvaUser.edit();
@@ -133,17 +109,13 @@ public class NovoUsuario_Activity extends AppCompatActivity {
                 escritor.putString("login",login);
 
                 //Escrever no SharedPreferences
-                //Falta Salvar o E-mail
-                escritor.putString("email",email);
                 escritor.putBoolean("manterLogado",manterLogado);
-
-                escritor.putBoolean("tema",temaEscuro);
 
                 escritor.commit(); //Salva em Disco
 
                 //Salvando o user
 
-                User user =new User(nome,login,senha,email,manterLogado);
+                User user =new User(nome,login,senha,manterLogado);
 
 
                 Intent intent=new Intent(NovoUsuario_Activity.this, AlterarContatos_Activity.class);

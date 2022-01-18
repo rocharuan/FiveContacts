@@ -1,8 +1,14 @@
 package com.example.fivecontacts.main.model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Contato implements Serializable, Comparable {
+    String nome;
+    String numero;
+    Bitmap foto;
+
     public String getNome() {
         return nome;
     }
@@ -19,8 +25,13 @@ public class Contato implements Serializable, Comparable {
         this.numero = numero;
     }
 
-    String nome;
-    String numero;
+    public Bitmap getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Bitmap foto) {
+        this.foto = foto;
+    }
 
     @Override
     public int compareTo(Object o) {
