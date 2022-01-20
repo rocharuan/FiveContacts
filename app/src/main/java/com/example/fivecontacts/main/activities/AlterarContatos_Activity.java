@@ -149,12 +149,6 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
             while (phones.moveToNext()) {
                 String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 telefonesContatos[i]=number; //Salvando só último telefone
-
-//                Uri photo = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long
-//                        .valueOf(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)));
-//
-//                Uri imageUri = Uri.withAppendedPath(photo, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-//                fotosContatos[i] = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
             }
             i++;
         }
@@ -171,7 +165,6 @@ public class AlterarContatos_Activity extends AppCompatActivity implements Botto
                         Contato c= new Contato();
                         c.setNome(nomesContatos[i]);
                         c.setNumero("tel:+"+telefonesContatos[i]);
-                        c.setFoto(fotosContatos[i]);
                         salvarContato(c);
                         Intent intent = new Intent(getApplicationContext(), ListaDeContatos_Activity.class);
                         intent.putExtra("usuario", user);

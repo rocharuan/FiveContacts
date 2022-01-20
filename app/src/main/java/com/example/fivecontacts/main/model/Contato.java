@@ -7,7 +7,6 @@ import java.io.Serializable;
 public class Contato implements Serializable, Comparable {
     String nome;
     String numero;
-    Bitmap foto;
 
     public String getNome() {
         return nome;
@@ -23,14 +22,6 @@ public class Contato implements Serializable, Comparable {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public Bitmap getFoto() {
-        return foto;
-    }
-
-    public void setFoto(Bitmap foto) {
-        this.foto = foto;
     }
 
     @Override

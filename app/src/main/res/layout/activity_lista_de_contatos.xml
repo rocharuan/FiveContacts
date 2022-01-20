@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/emergency_contactos"
         android:textColor="@color/cinza"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:gravity="center"
         android:layout_weight="5"/>
 

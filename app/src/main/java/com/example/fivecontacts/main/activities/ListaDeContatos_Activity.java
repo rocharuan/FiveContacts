@@ -18,10 +18,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.fivecontacts.R;
 import com.example.fivecontacts.main.model.Contato;
+import com.example.fivecontacts.main.model.MyItemClickListener;
 import com.example.fivecontacts.main.model.RVAdapter;
 import com.example.fivecontacts.main.model.User;
 import com.example.fivecontacts.main.utils.UIEducacionalPermissao;
@@ -33,7 +35,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ListaDeContatos_Activity extends AppCompatActivity implements UIEducacionalPermissao.NoticeDialogListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class ListaDeContatos_Activity extends AppCompatActivity implements UIEducacionalPermissao.NoticeDialogListener, BottomNavigationView.OnNavigationItemSelectedListener, MyItemClickListener {
 
     RecyclerView rv;
     BottomNavigationView bnv;
@@ -111,30 +113,7 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
         RVAdapter adapter = new RVAdapter(contatos);
         rv.setAdapter(adapter);
 
-        rv.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-
-                int i = rv.getChildAdapterPosition(rv);
-
-                if (checarPermissaoPhone_SMD(contatos.get(i).getNumero())) {
-
-                    Uri uri = Uri.parse(contatos.get(i).getNumero());
-                    Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
-                    startActivity(itLigar);
-                }
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
+        adapter.setOnItemClickListener(this);
     }
 
     protected boolean checarPermissaoPhone_SMD(String numero){
@@ -269,7 +248,20 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
 
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
 
+        final ArrayList<Contato> contatos = user.getContatos();
+        Collections.sort(contatos);
+
+        if (checarPermissaoPhone_SMD(contatos.get(position).getNumero())) {
+
+            Uri uri = Uri.parse(contatos.get(position).getNumero());
+            Intent itLigar = new Intent(Intent.ACTION_CALL, uri);
+            startActivity(itLigar);
+        }
+
+    }
 }
 
 
