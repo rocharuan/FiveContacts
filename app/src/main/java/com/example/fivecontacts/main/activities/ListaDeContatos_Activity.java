@@ -105,6 +105,7 @@ public class ListaDeContatos_Activity extends AppCompatActivity implements UIEdu
         Log.v("PDM3","contatos:"+contatos.size());
         user.setContatos(contatos);
     }
+
     protected void preencherLista(User user){
 
         final ArrayList<Contato> contatos = user.getContatos();
